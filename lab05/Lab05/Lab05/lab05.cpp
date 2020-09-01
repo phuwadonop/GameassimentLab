@@ -34,7 +34,6 @@ void setcursor(bool visible)
 }
 int main()
 {	
-	char direction;
 	setcursor(0);
 	char ch = ' ';
 	int x = 38, y = 20;
@@ -44,14 +43,24 @@ int main()
 		if (_kbhit())
 		{
 			ch = _getch();
-			if (ch == 'a') { direction = ch; } // เดินไปทางซ้าย
-			if (ch == 'd') { direction = ch; } // เดินไปทางขวา
-			if (ch == 's') { direction = ch; } // หยุด
+			if (ch == 'a') {
+				if (x > 0) { erase_ship(x, y);  draw_ship(--x, y); }
+				else { erase_ship(x, y); draw_ship(0, y); }
+			}
+			if (ch == 'd') {
+				if (x < 80) { erase_ship(x, y); draw_ship(++x, y); }
+				else { erase_ship(x, y); draw_ship(80, y); }
+			}
+			if (ch == 's') {
+				if (y < 20) { erase_ship(x, y); draw_ship(x, ++y); }
+				else { draw_ship(x, 20); }
+			}
+			if (ch == 'w') {
+				if (y > 0) { erase_ship(x, y); draw_ship(x, --y); }
+				else { draw_ship(x, 0); }
+			}
+			fflush(stdin);
 		}
-		if (direction == 'a') {
-			while (x != 0) { erase_ship(x, y); draw_ship(--x, y); Sleep(1000); }
-		}
-		fflush(stdin);
 		Sleep(100);
 	} while (ch != 'x');
 }
