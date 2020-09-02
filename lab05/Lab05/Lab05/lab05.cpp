@@ -2,9 +2,6 @@
 #include<windows.h>
 #include<conio.h>
 
-#define ON 1
-#define OFF 0
-
 void setcolor(int, int);
 void gotoxy(int, int);
 void draw_ship(int, int);
@@ -55,7 +52,7 @@ int main()
 					bullet_st[i] = 1;
 					xb[i] = x+2; yb[i] = y - 1;
 					bullet_on(xb[i], yb[i]);
-					i++;
+					++i;
 				}
 			}
 			fflush(stdin);
@@ -67,7 +64,7 @@ int main()
 			{
 				bullet_on(xb[0], --yb[0]);
 			}
-			else { bullet_off(xb[0], yb[0]); bullet_st[0] = 0; i--; }
+			else { bullet_off(xb[0], yb[0]); bullet_st[0] = 0; --i; }
 		}
 		if (bullet_st[1] == 1)
 		{
@@ -76,7 +73,7 @@ int main()
 			{
 				bullet_on(xb[1], --yb[1]);
 			}
-			else { bullet_off(xb[1], yb[1]); bullet_st[1] = 0; i--;}
+			else { bullet_off(xb[1], yb[1]); bullet_st[1] = 0; --i;}
 		}
 		if (bullet_st[2] == 1)
 		{
@@ -85,7 +82,7 @@ int main()
 			{
 				bullet_on(xb[2], --yb[2]);
 			}
-			else { bullet_off(xb[2], yb[2]); bullet_st[2] = 0; i--;}
+			else { bullet_off(xb[2], yb[2]); bullet_st[2] = 0; --i;}
 		}
 		if (bullet_st[3] == 1)
 		{
@@ -94,7 +91,7 @@ int main()
 			{
 				bullet_on(xb[3], --yb[3]);
 			}
-			else { bullet_off(xb[3], yb[3]); bullet_st[3] = 0; i--; }
+			else { bullet_off(xb[3], yb[3]); bullet_st[3] = 0; --i; }
 		}
 		if (bullet_st[4] == 1)
 		{
@@ -103,7 +100,7 @@ int main()
 			{
 				bullet_on(xb[4], --yb[4]);
 			}
-			else { bullet_off(xb[4], yb[4]); bullet_st[4] = 0; i--; }
+			else { bullet_off(xb[4], yb[4]); bullet_st[4] = 0; --i; }
 		}
 		Sleep(100);
 	} while (ch != 'x');
