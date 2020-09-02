@@ -40,7 +40,7 @@ int main()
 				{ 
 					erase_ship(x, y); draw_ship(++x, y); 
 					if (i <= 4) 
-						if (bullet_st[i] == 0) { left[i] = 1; right[i] = 0; }
+						if (bullet_st[i] == 0) { left[i] = 0; right[i] = 1; }
 				}
 				else { erase_ship(x, y); draw_ship(80, y); }
 			}
@@ -52,26 +52,29 @@ int main()
 				if (y > 0) { erase_ship(x, y); draw_ship(x, --y); }
 				else { draw_ship(x, 0); }
 			}
-			if (ch == ' ' && (bullet_st[0] == 0 || bullet_st[1] == 0 || bullet_st[2] == 0 || bullet_st[3] == 0 || bullet_st[4] == 0 ))
+			if (ch == ' ' && bullet_st[i] == 0 )
 			{
-				bullet_st[i] = 1;
-				if (right[i] == 1)
-				{   
-					xb[i] = x + 5; yb[i] = y;
-					bullet_on(xb[i],yb[i]);
-				}
-				if (left[i] == 1)
+				if (i <= 4) 
 				{
-					xb[i] = x - 5; yb[i] = y;
-					bullet_on(xb[i], yb[i]);
-				}
-				if(left[i] == 0 && right[i] == 0)
-				{
+					bullet_st[i] = 1;
+					if (right[i] == 1)
+					{
+						xb[i] = x + 5; yb[i] = y;
+						bullet_on(xb[i], yb[i]);
+					}
+					if (left[i] == 1)
+					{
+						xb[i] = x - 5; yb[i] = y;
+						bullet_on(xb[i], yb[i]);
+					}
+					if (left[i] == 0 && right[i] == 0)
+					{
 						xb[i] = x + 5; yb[i] = y;
 						bullet_on(xb[i], yb[i]);
 						right[i] = 1;
+					}
+					i++;
 				}
-				if(i<=4) i++;
 			}
 			fflush(stdin);
 		}
