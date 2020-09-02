@@ -16,7 +16,7 @@ void bullet_off(int , int );
 int main()
 {	
 	int xb[5], yb[5],i=0;
-	bool left[5] = { 0,0,0,0,0 }, right[5] = { 0,0,0,0,0 }, bullet_st[5] = { 0,0,0,0,0 };
+	bool bullet_st[5] = { 0,0,0,0,0 };
 	setcursor(0);
 	char ch = ' ';
 	int x = 38, y = 20;
@@ -30,8 +30,6 @@ int main()
 				if (x > 0) 
 				{ 
 					erase_ship(x, y);  draw_ship(--x, y); 
-					if (i <= 4) 
-						if (bullet_st[i] == 0) { left[i] = 1; right[i] = 0; } 
 				}
 				else { erase_ship(x, y); draw_ship(0, y); }
 			}
@@ -39,8 +37,6 @@ int main()
 				if (x < 80) 
 				{ 
 					erase_ship(x, y); draw_ship(++x, y); 
-					if (i <= 4) 
-						if (bullet_st[i] == 0) { left[i] = 0; right[i] = 1; }
 				}
 				else { erase_ship(x, y); draw_ship(80, y); }
 			}
@@ -52,27 +48,13 @@ int main()
 				if (y > 0) { erase_ship(x, y); draw_ship(x, --y); }
 				else { draw_ship(x, 0); }
 			}
-			if (ch == ' ' && bullet_st[i] == 0 )
+			if (ch == ' ' && bullet_st[i] == 0)
 			{
-				if (i <= 4) 
+				if (i <= 4)
 				{
 					bullet_st[i] = 1;
-					if (right[i] == 1)
-					{
-						xb[i] = x + 5; yb[i] = y;
-						bullet_on(xb[i], yb[i]);
-					}
-					if (left[i] == 1)
-					{
-						xb[i] = x - 5; yb[i] = y;
-						bullet_on(xb[i], yb[i]);
-					}
-					if (left[i] == 0 && right[i] == 0)
-					{
-						xb[i] = x + 5; yb[i] = y;
-						bullet_on(xb[i], yb[i]);
-						right[i] = 1;
-					}
+					xb[i] = x+2; yb[i] = y - 1;
+					bullet_on(xb[i], yb[i]);
 					i++;
 				}
 			}
@@ -81,52 +63,47 @@ int main()
 		if (bullet_st[0] == 1 )
 		{
 			bullet_off(xb[0], yb[0]);
-			if (xb[0] < 80 && xb[0] > 0)
+			if (yb[0] > 0)
 			{
-				if (left[0] == 1) { bullet_off(xb[0], yb[0]); bullet_on(--xb[0], yb[0]); }
-				if (right[0] == 1) { bullet_off(xb[0], yb[0]); bullet_on(++xb[0], yb[0]); }
+				bullet_on(xb[0], --yb[0]);
 			}
-			else { bullet_st[0] = 0; i--; }
+			else { bullet_off(xb[0], yb[0]); bullet_st[0] = 0; i--; }
 		}
 		if (bullet_st[1] == 1)
 		{
 			bullet_off(xb[1], yb[1]);
-			if (xb[1] < 80 && xb[1] > 0)
+			if (yb[1] > 0)
 			{
-				if (left[1] == 1) { bullet_off(xb[1], yb[1]); bullet_on(--xb[1], yb[1]); }
-				if (right[1] == 1) { bullet_off(xb[1], yb[1]); bullet_on(++xb[1], yb[1]); }
+				bullet_on(xb[1], --yb[1]);
 			}
-			else { bullet_st[1] = 0; i--;}
+			else { bullet_off(xb[1], yb[1]); bullet_st[1] = 0; i--;}
 		}
 		if (bullet_st[2] == 1)
 		{
 			bullet_off(xb[2], yb[2]);
-			if (xb[2] < 80 && xb[2] > 0)
+			if (yb[2] > 0)
 			{
-				if (left[2] == 1) { bullet_off(xb[2], yb[2]); bullet_on(--xb[2], yb[2]); }
-				if (right[2] == 1) { bullet_off(xb[2], yb[2]); bullet_on(++xb[2], yb[2]); }
+				bullet_on(xb[2], --yb[2]);
 			}
-			else { bullet_st[2] = 0; i--;}
+			else { bullet_off(xb[2], yb[2]); bullet_st[2] = 0; i--;}
 		}
 		if (bullet_st[3] == 1)
 		{
 			bullet_off(xb[3], yb[3]);
-			if (xb[3] < 80 && xb[3] > 0)
+			if (yb[3] > 0)
 			{
-				if (left[3] == 1) { bullet_off(xb[3], yb[3]); bullet_on(--xb[3], yb[3]); }
-				if (right[3] == 1) { bullet_off(xb[3], yb[3]); bullet_on(++xb[3], yb[3]); }
+				bullet_on(xb[3], --yb[3]);
 			}
-			else { bullet_st[3] = 0; i--; }
+			else { bullet_off(xb[3], yb[3]); bullet_st[3] = 0; i--; }
 		}
 		if (bullet_st[4] == 1)
 		{
 			bullet_off(xb[4], yb[4]);
-			if (xb[4] < 80 && xb[4] > 0)
+			if (yb[4] > 0)
 			{
-				if (left[4] == 1) { bullet_off(xb[4], yb[4]); bullet_on(--xb[4], yb[4]); }
-				if (right[4] == 1) { bullet_off(xb[4], yb[4]); bullet_on(++xb[4], yb[4]); }
+				bullet_on(xb[4], --yb[4]);
 			}
-			else { bullet_st[4] = 0; i--; }
+			else { bullet_off(xb[4], yb[4]); bullet_st[4] = 0; i--; }
 		}
 		Sleep(100);
 	} while (ch != 'x');
@@ -166,7 +143,7 @@ void bullet_on(int x, int y)
 {
 	setcolor(6,0);
 	gotoxy(x, y);
-	printf("-");
+	printf("*");
 }
 void bullet_off(int x, int y) 
 {
