@@ -13,7 +13,8 @@ void bullet_off(int , int );
 int main()
 {	
 	int xb[5], yb[5],i=0;
-	bool bullet_st[5] = { 0,0,0,0,0 };
+	bool bullet_st[5] = { 0,0,0,0,0 },stop_ship=0;
+	int ship_vec = 3;
 	setcursor(0);
 	char ch = ' ';
 	int x = 38, y = 20;
@@ -23,27 +24,17 @@ int main()
 		if (_kbhit())
 		{
 			ch = _getch();
-			if (ch == 'a') {
-				if (x > 0) 
-				{ 
-					erase_ship(x, y);  draw_ship(--x, y); 
-				}
-				else { erase_ship(x, y); draw_ship(0, y); }
+			if (ch == 'a')
+			{
+				ship_vec = 0; stop_ship = 0;
 			}
-			if (ch == 'd') {
-				if (x < 80) 
-				{ 
-					erase_ship(x, y); draw_ship(++x, y); 
-				}
-				else { erase_ship(x, y); draw_ship(80, y); }
+			if (ch == 'd')
+			{
+				ship_vec = 1; stop_ship = 0;
 			}
-			if (ch == 's') {
-				if (y < 20) { erase_ship(x, y); draw_ship(x, ++y); }
-				else { draw_ship(x, 20); }
-			}
-			if (ch == 'w') {
-				if (y > 0) { erase_ship(x, y); draw_ship(x, --y); }
-				else { draw_ship(x, 0); }
+			if (ch == 's') 
+			{
+				stop_ship = 1; ship_vec = 3;
 			}
 			if (ch == ' ' && bullet_st[i] == 0)
 			{
@@ -56,6 +47,26 @@ int main()
 				}
 			}
 			fflush(stdin);
+		}
+		if (ship_vec == 1)
+		{
+			if (x < 80)
+			{
+				erase_ship(x, y); draw_ship(++x, y);
+			}
+			else { erase_ship(x, y); draw_ship(80, y); }
+		}
+		if (ship_vec == 0)
+		{
+			if (x > 0)
+			{
+				erase_ship(x, y); draw_ship(--x, y);
+			}
+			else { erase_ship(x, y); draw_ship(0, y); }
+		}
+		if (stop_ship == 1)
+		{
+			erase_ship(x, y); draw_ship(x, y);
 		}
 		if (bullet_st[0] == 1 )
 		{
