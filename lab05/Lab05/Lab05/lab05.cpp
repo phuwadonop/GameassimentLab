@@ -123,14 +123,14 @@ int main()
 		}
 		if (bullet[0].bullet_st == 1) 
 		{
-			bullet_off(bullet[1].coord_x, bullet[1].coord_y);
-			if (bullet[1].coord_y > 0)
+			bullet_off(bullet[0].coord_x, bullet[0].coord_y);
+			if (bullet[0].coord_y > 0)
 			{
-				bullet_on(bullet[1].coord_x, --bullet[1].coord_y);
+				bullet_on(bullet[0].coord_x, --bullet[0].coord_y);
 			}
 			else
 			{
-				bullet_off(bullet[1].coord_x, bullet[1].coord_y);  bullet[1].bullet_st == 0;
+				bullet_off(bullet[0].coord_x, bullet[0].coord_y);  bullet[0].bullet_st = 0;
 			}
 		}
 		if (bullet[1].bullet_st == 1)
@@ -142,19 +142,19 @@ int main()
 			}
 			else
 			{
-				bullet_off(bullet[1].coord_x, bullet[1].coord_y);  bullet[1].bullet_st == 0;
+				bullet_off(bullet[1].coord_x, bullet[1].coord_y);  bullet[1].bullet_st = 0;
 			}
 		}
 		if (bullet[2].bullet_st == 1)
 		{
 			bullet_off(bullet[2].coord_x, bullet[2].coord_y);
-			if (bullet[1].coord_y > 0)
+			if (bullet[2].coord_y > 0)
 			{
 				bullet_on(bullet[2].coord_x, --bullet[2].coord_y);
 			}
 			else
 			{
-				bullet_off(bullet[2].coord_x, bullet[2].coord_y);  bullet[2].bullet_st == 0;
+				bullet_off(bullet[2].coord_x, bullet[2].coord_y);  bullet[2].bullet_st = 0;
 			}
 		}
 		if (bullet[3].bullet_st == 1)
@@ -166,7 +166,7 @@ int main()
 			}
 			else
 			{
-				bullet_off(bullet[3].coord_x, bullet[3].coord_y);  bullet[3].bullet_st == 0;
+				bullet_off(bullet[3].coord_x, bullet[3].coord_y);  bullet[3].bullet_st = 0;
 			}
 		}
 		if (bullet[4].bullet_st == 1)
@@ -174,11 +174,11 @@ int main()
 			bullet_off(bullet[4].coord_x, bullet[4].coord_y);
 			if (bullet[4].coord_y > 0)
 			{
-				bullet_on(bullet[4].coord_x,bullet[4].coord_y);
+				bullet_on(bullet[4].coord_x,--bullet[4].coord_y);
 			}
 			else
 			{
-				bullet_off(bullet[4].coord_x, bullet[4].coord_y);  bullet[4].bullet_st == 0;
+				bullet_off(bullet[4].coord_x, bullet[4].coord_y);  bullet[4].bullet_st = 0;
 			}
 		}
 		//if (bullet_st[0] || bullet_st[1] || bullet_st[2] || bullet_st[3] || bullet_st[4]) Beep(1000, 100);
