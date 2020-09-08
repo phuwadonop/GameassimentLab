@@ -1,24 +1,42 @@
 #include<stdio.h>
 #include<windows.h>
 #include<conio.h>
+#include<time.h>
 
+#define elif else if
+int random_number(int, int);
 void setcolor(int, int);
 void gotoxy(int, int);
 void draw_ship(int, int);
 void erase_ship(int, int);
 void setcursor(bool);
-void bullet_on(int , int);
-void bullet_off(int , int );
+void bullet_on(int, int);
+void bullet_off(int, int);
+void star_random();
+
+typedef struct Bullet {
+	bool bullet_st;
+	int coord_x;
+	int coord_y;
+} Bullet;
+
+bool COORD_star[5][71];
 
 int main()
-{	
-	int xb[5], yb[5],i=0;
-	bool bullet_st[5] = { 0,0,0,0,0 },stop_ship=0;
-	int ship_vec = 3;
+{
+	Bullet bullet[5];
+
+	for (int i = 0; i < 5; i++)
+	{
+		bullet[i].bullet_st = 0;
+	}
+
+	bool stop_ship = 0; int ship_vec = 3;
 	setcursor(0);
 	char ch = ' ';
 	int x = 38, y = 20;
 	draw_ship(x, y);
+
 	do
 	{
 		if (_kbhit())
@@ -32,18 +50,41 @@ int main()
 			{
 				ship_vec = 1; stop_ship = 0;
 			}
-			if (ch == 's') 
+			if (ch == 's')
 			{
 				stop_ship = 1; ship_vec = 3;
 			}
-			if (ch == ' ' && bullet_st[i] == 0)
+			if (ch == ' ')
 			{
-				if (i <= 4)
+				if (bullet[0].bullet_st == 0)
 				{
-					bullet_st[i] = 1;
-					xb[i] = x+2; yb[i] = y - 1;
-					bullet_on(xb[i], yb[i]);
-					++i;
+					bullet[0].bullet_st = 1;
+					bullet[0].coord_x = x + 2; bullet[0].coord_y = y - 1;
+					bullet_on(bullet[0].coord_x, bullet[0].coord_y);
+				}
+				elif(bullet[1].bullet_st == 0)
+				{
+					bullet[1].bullet_st = 1;
+					bullet[1].coord_x = x + 2; bullet[1].coord_y = y - 1;
+					bullet_on(bullet[1].coord_x, bullet[1].coord_y);
+				}
+				elif(bullet[2].bullet_st == 0)
+				{
+					bullet[2].bullet_st = 1;
+					bullet[2].coord_x = x + 2; bullet[2].coord_y = y - 1;
+					bullet_on(bullet[2].coord_x, bullet[2].coord_y);
+				}
+				elif(bullet[3].bullet_st == 0)
+				{
+					bullet[3].bullet_st = 1;
+					bullet[3].coord_x = x + 2; bullet[3].coord_y = y - 1;
+					bullet_on(bullet[3].coord_x, bullet[3].coord_y);
+				}
+				elif(bullet[4].bullet_st == 0)
+				{
+					bullet[4].bullet_st = 1;
+					bullet[4].coord_x = x + 2; bullet[4].coord_y = y - 1;
+					bullet_on(bullet[4].coord_x, bullet[4].coord_y);
 				}
 			}
 			fflush(stdin);
@@ -68,50 +109,65 @@ int main()
 		{
 			erase_ship(x, y); draw_ship(x, y);
 		}
-		if (bullet_st[0] == 1 )
+		if (bullet[0].bullet_st == 1)
 		{
-			bullet_off(xb[0], yb[0]);
-			if (yb[0] > 0)
+			bullet_off(bullet[0].coord_x, bullet[0].coord_y);
+			if (bullet[0].coord_y > 0)
 			{
-				bullet_on(xb[0], --yb[0]);
+				bullet_on(bullet[0].coord_x, --bullet[0].coord_y);
 			}
-			else { bullet_off(xb[0], yb[0]); bullet_st[0] = 0; --i; }
+			else
+			{
+				bullet_off(bullet[0].coord_x, bullet[0].coord_y);  bullet[0].bullet_st = 0;
+			}
 		}
-		if (bullet_st[1] == 1)
+		if (bullet[1].bullet_st == 1)
 		{
-			bullet_off(xb[1], yb[1]);
-			if (yb[1] > 0)
+			bullet_off(bullet[1].coord_x, bullet[1].coord_y);
+			if (bullet[1].coord_y > 0)
 			{
-				bullet_on(xb[1], --yb[1]);
+				bullet_on(bullet[1].coord_x, --bullet[1].coord_y);
 			}
-			else { bullet_off(xb[1], yb[1]); bullet_st[1] = 0; --i;}
+			else
+			{
+				bullet_off(bullet[1].coord_x, bullet[1].coord_y);  bullet[1].bullet_st = 0;
+			}
 		}
-		if (bullet_st[2] == 1)
+		if (bullet[2].bullet_st == 1)
 		{
-			bullet_off(xb[2], yb[2]);
-			if (yb[2] > 0)
+			bullet_off(bullet[2].coord_x, bullet[2].coord_y);
+			if (bullet[2].coord_y > 0)
 			{
-				bullet_on(xb[2], --yb[2]);
+				bullet_on(bullet[2].coord_x, --bullet[2].coord_y);
 			}
-			else { bullet_off(xb[2], yb[2]); bullet_st[2] = 0; --i;}
+			else
+			{
+				bullet_off(bullet[2].coord_x, bullet[2].coord_y);  bullet[2].bullet_st = 0;
+			}
 		}
-		if (bullet_st[3] == 1)
+		if (bullet[3].bullet_st == 1)
 		{
-			bullet_off(xb[3], yb[3]);
-			if (yb[3] > 0)
+			bullet_off(bullet[3].coord_x, bullet[3].coord_y);
+			if (bullet[3].coord_y > 0)
 			{
-				bullet_on(xb[3], --yb[3]);
+				bullet_on(bullet[3].coord_x, --bullet[3].coord_y);
 			}
-			else { bullet_off(xb[3], yb[3]); bullet_st[3] = 0; --i; }
+			else
+			{
+				bullet_off(bullet[3].coord_x, bullet[3].coord_y);  bullet[3].bullet_st = 0;
+			}
 		}
-		if (bullet_st[4] == 1)
+		if (bullet[4].bullet_st == 1)
 		{
-			bullet_off(xb[4], yb[4]);
-			if (yb[4] > 0)
+			bullet_off(bullet[4].coord_x, bullet[4].coord_y);
+			if (bullet[4].coord_y > 0)
 			{
-				bullet_on(xb[4], --yb[4]);
+				bullet_on(bullet[4].coord_x, --bullet[4].coord_y);
 			}
-			else { bullet_off(xb[4], yb[4]); bullet_st[4] = 0; --i; }
+			else
+			{
+				bullet_off(bullet[4].coord_x, bullet[4].coord_y);  bullet[4].bullet_st = 0;
+			}
 		}
 		Sleep(100);
 	} while (ch != 'x');
@@ -147,16 +203,39 @@ void setcursor(bool visible)
 	lpCursor.dwSize = 20;
 	SetConsoleCursorInfo(console, &lpCursor);
 }
-void bullet_on(int x, int y) 
+void bullet_on(int x, int y)
 {
-	setcolor(6,0);
+	setcolor(3, 0);
 	gotoxy(x, y);
-	printf("*");
+	printf("^");
 }
-void bullet_off(int x, int y) 
+void bullet_off(int x, int y)
 {
 	setcolor(2, 0);
 	gotoxy(x, y);
 	printf(" ");
-}	 
+}
+int random_number(int min, int max)
+{
+	int r = (rand() / (float)RAND_MAX) * (max + 1) + min;
+	return r > max ? max : r;
+}
+void star_random()
+{
+	while (1)
+	{
+		int x = random_number(10, 70);
+		int y = random_number(2, 5);
+		if (COORD_star[y][x] == 0)
+		{
+			setcolor(6, 0);
+			COORD_star[y][x] = 1;
+			gotoxy(x, y);
+			printf("*");
+			break;
+		}
+	}
+}
+
+
 
