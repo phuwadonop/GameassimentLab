@@ -181,8 +181,14 @@ int main()
 				bullet_off(bullet[4].coord_x, bullet[4].coord_y);  bullet[4].bullet_st = 0;
 			}
 		}
-		//if (bullet_st[0] || bullet_st[1] || bullet_st[2] || bullet_st[3] || bullet_st[4]) Beep(1000, 100);
-		Sleep(100);
+		if (bullet[0].bullet_st == 1 || bullet[1].bullet_st == 1 || bullet[2].bullet_st == 1 || bullet[3].bullet_st == 1 || bullet[4].bullet_st == 1)
+		{
+			Beep(700, 100);
+		}
+		else 
+		{ 
+			Sleep(100); 
+		}
 	} while (ch != 'x');
 }
 void setcolor(int fg, int bg)
