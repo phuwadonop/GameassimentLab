@@ -2,6 +2,9 @@
 #include<windows.h>
 #include<conio.h>
 #include<time.h>
+#include<string>
+
+using namespace std;
 
 #define elif else if
 int random_number(int, int);
@@ -13,6 +16,9 @@ void setcursor(bool);
 void bullet_on(int , int);
 void bullet_off(int , int );
 void star_random();
+char cursor(int, int);
+void printScore(int);
+void star_destroy(int , int );
 
 typedef struct Bullet {
 	bool bullet_st;
@@ -21,9 +27,13 @@ typedef struct Bullet {
 } Bullet;
 
 bool COORD_star[5][71];
+int score = 0;
 
 int main()
-{
+{	
+
+	printScore(0);
+
 	Bullet bullet[5] ;
 
 	for (int i = 0; i < 5; i++)
@@ -125,8 +135,18 @@ int main()
 		{
 			bullet_off(bullet[0].coord_x, bullet[0].coord_y);
 			if (bullet[0].coord_y > 0)
-			{
-				bullet_on(bullet[0].coord_x, --bullet[0].coord_y);
+			{	
+				if (cursor(bullet[0].coord_x, bullet[0].coord_y - 1) == '*')
+				{	
+					bullet[0].bullet_st = 0;
+					star_destroy(bullet[0].coord_x, bullet[0].coord_y - 1);
+					Beep(1000, 100);
+					printScore(score);
+				}
+				else
+				{
+					bullet_on(bullet[0].coord_x, --bullet[0].coord_y);
+				}
 			}
 			else
 			{
@@ -138,7 +158,17 @@ int main()
 			bullet_off(bullet[1].coord_x, bullet[1].coord_y);
 			if (bullet[1].coord_y > 0)
 			{
-				bullet_on(bullet[1].coord_x, --bullet[1].coord_y);
+				if (cursor(bullet[1].coord_x, bullet[1].coord_y - 1) == '*')
+				{
+					bullet[1].bullet_st = 0;
+					star_destroy(bullet[1].coord_x, bullet[1].coord_y - 1);
+					Beep(1000, 100);
+					printScore(score);
+				}
+				else
+				{
+					bullet_on(bullet[1].coord_x, --bullet[1].coord_y);
+				}
 			}
 			else
 			{
@@ -150,7 +180,17 @@ int main()
 			bullet_off(bullet[2].coord_x, bullet[2].coord_y);
 			if (bullet[2].coord_y > 0)
 			{
-				bullet_on(bullet[2].coord_x, --bullet[2].coord_y);
+				if (cursor(bullet[2].coord_x, bullet[2].coord_y - 1) == '*')
+				{
+					bullet[2].bullet_st = 0;
+					star_destroy(bullet[2].coord_x, bullet[2].coord_y - 1);
+					Beep(1000, 100);
+					printScore(score);
+				}
+				else
+				{
+					bullet_on(bullet[2].coord_x, --bullet[2].coord_y);
+				}
 			}
 			else
 			{
@@ -162,7 +202,17 @@ int main()
 			bullet_off(bullet[3].coord_x, bullet[3].coord_y);
 			if (bullet[3].coord_y > 0)
 			{
-				bullet_on(bullet[3].coord_x, --bullet[3].coord_y);
+				if (cursor(bullet[3].coord_x, bullet[3].coord_y - 1) == '*')
+				{
+					bullet[3].bullet_st = 0;
+					star_destroy(bullet[3].coord_x, bullet[3].coord_y - 1);
+					Beep(1000, 100);
+					printScore(score);
+				}
+				else
+				{
+					bullet_on(bullet[3].coord_x, --bullet[3].coord_y);
+				}
 			}
 			else
 			{
@@ -174,7 +224,17 @@ int main()
 			bullet_off(bullet[4].coord_x, bullet[4].coord_y);
 			if (bullet[4].coord_y > 0)
 			{
-				bullet_on(bullet[4].coord_x,--bullet[4].coord_y);
+				if (cursor(bullet[4].coord_x, bullet[4].coord_y - 1) == '*')
+				{
+					bullet[4].bullet_st = 0;
+					star_destroy(bullet[4].coord_x, bullet[4].coord_y - 1);
+					Beep(1000, 100);
+					printScore(score);
+				}
+				else
+				{
+					bullet_on(bullet[4].coord_x, --bullet[4].coord_y);
+				}
 			}
 			else
 			{
@@ -183,7 +243,7 @@ int main()
 		}
 		if (bullet[0].bullet_st == 1 || bullet[1].bullet_st == 1 || bullet[2].bullet_st == 1 || bullet[3].bullet_st == 1 || bullet[4].bullet_st == 1)
 		{
-			Beep(700, 100);
+
 		}
 		else 
 		{ 
@@ -254,6 +314,50 @@ void star_random()
 			break;
 		}
 	}
+}
+char cursor(int x, int y) 
+{
+	HANDLE hStd = GetStdHandle(STD_OUTPUT_HANDLE);
+	char buf[2]; COORD c = { x,y }; DWORD num_read;
+	if (!ReadConsoleOutputCharacter(hStd, (LPTSTR)buf, 1, c, (LPDWORD)&num_read))
+		return '\0';
+	else
+		return buf[0];
+}
+void printScore(int x) 
+{
+	gotoxy(75, 0);
+	printf("      ");
+	int Num[6] = {0,0,0,0,0,0};
+	string point = to_string(x);
+	int L = point.size();
+	int i = 0;
+	while (i != L) 
+	{	
+		int q = 0;
+		Num[5 - i] += point[L - i - 1]-48;
+		q = Num[5 - i] / 10;
+		Num[5 - i] = Num[5 - i] % 10;
+		if (q != 0) 
+		{
+			Num[5 - i - 1] += q;
+		}
+		i++;
+	}
+	gotoxy(75, 0);
+	setcolor(7, 0);
+	for (int i = 0; i < 6;i++) 
+	{
+		printf("%d", Num[i]);
+	}
+}
+void star_destroy(int x, int y)
+{
+	gotoxy(x, y);
+	printf(" ");
+	COORD_star[y][x] = 0;
+	star_random();
+	score += 100;
 }
 
 
